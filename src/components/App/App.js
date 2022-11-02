@@ -1,8 +1,14 @@
 import React from 'react';
-import Product from '../Product/Product';
+import Navigation from '../Navigation/Navigation';
+import SaladMaker from '../SaladMaker/SaladMaker';
 
 function App() {
-  return <Product />
+  return (
+    <>
+      <Navigation />
+      <SaladMaker />
+    </>
+  );
 }
 
 export default App;
