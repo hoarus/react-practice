@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './FileNamer.css';
 
 export default function FileNamer() {
   const [name, setName] = useState('');
   const [alert,setAlert] = useState(false);
-  const validate = event => {
-    if(/\*/.test(name)) {
-      event.preventDefault();
-      setAlert(true);
-      return;
+
+  useEffect(() => {
+    const handleWindowClick = () => setAlert(false);
+    if(alert) {
+      window.addEventListener('click', handleWindowClick);
     }
-      setAlert(false);
- };
+    return () => window.removeEventListener('click', handleWindowClick);
+  }, [alert, setAlert]);
+
   return(
     <div className="wrapper">
       <div className="preview">
@@ -21,22 +22,29 @@ export default function FileNamer() {
         <label>
           <p>Name:</p>
           <input 
-            autocomplete="off"
+            autoComplete="off"
             name="name" 
-            onBlur={()=> setAlert(false) }
             onChange={event=> setName(event.target.value) }
-            onFocus={() => setAlert(true)} 
             />
         </label>
-        {alert && 
-          <div>
-          <span role="img" aria-label="allowed">✅</span> Alphanumeric Characters
-          <br />
-          <span role="img" aria-label="not allowed">⛔️</span> *
+        <div className="information-wrapper">
+          <button
+            className="information"
+            onClick={() => setAlert(true)}
+            type="button"
+          >
+            more information
+          </button>
+         {alert &&
+           <div className="popup">
+             <span role="img" aria-label="allowed">✅</span> Alphanumeric Characters
+             <br />
+             <span role="img" aria-label="not allowed">⛔️</span> *
+           </div>
+         }
         </div>
-        } 
         <div>
-          <button onClick={validate}>Save</button>
+          <button>Save</button>
         </div>
       </form>
     </div>
