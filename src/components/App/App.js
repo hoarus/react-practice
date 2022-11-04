@@ -1,13 +1,8 @@
-import React, { Fragment } from 'react';
-import './App.css';
+import React from 'react';
+import FileNamer from '../FileNamer/FileNamer';
 
 function App() {
-
-  return(
-    <Fragment>
-
-    </Fragment>
-  )
+    return <FileNamer />
 }
 
 export default App;
